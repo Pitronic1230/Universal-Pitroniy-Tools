@@ -47,11 +47,11 @@ namespace Universal_Pitroniy_Tools
         #region Themes JSON
         class ThemesJSONContent
         {
-            // Vars
+            // Themes file
             public string Name { get; set; }
             public string Path { get; set; }
 
-            // Theme settings
+            // Theme
             public string PrimaryBackgroundColor { get; set; }
         }
 
@@ -61,13 +61,32 @@ namespace Universal_Pitroniy_Tools
         }
         #endregion
 
+        #region Settings JSON
+        class SettingsJSON
+        {
+            // Settings file
+            public string Name { get; set; }
+            public string Path { get; set; }
+
+            // Settings
+            public string selectedTheme { get; set; }
+
+            public string Language { get; set; }
+        }
+        
+        class SettingsJSONCollection
+        {
+            public List<SettingsJSON> Collection { get; set; } = new();
+        }
+        #endregion
+
         #endregion
 
         #region Creating vars
         // JSON collections
         FilesJSON filesJSON = new();
-        ThemesJSON themesJSON = new(),
-            settingsJSON = new();
+        ThemesJSON themesJSON = new();
+        SettingsJSONCollection settingsJSON = new();
 
         // Path vars
         string
