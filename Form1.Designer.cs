@@ -40,7 +40,13 @@
             batTableDelete = new DataGridViewButtonColumn();
             statusPage = new TabPage();
             controlPage = new TabPage();
-            openFileDialog1 = new OpenFileDialog();
+            settingsPage = new TabPage();
+            themeGroupBox = new GroupBox();
+            addThemeButton = new Button();
+            themeSelectorLabel = new Label();
+            themeSelector = new ComboBox();
+            openFileDialog = new OpenFileDialog();
+            openThemeDialog = new OpenFileDialog();
             tabControl1.SuspendLayout();
             filesPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -48,6 +54,8 @@
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)filesTable).BeginInit();
+            settingsPage.SuspendLayout();
+            themeGroupBox.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -55,12 +63,13 @@
             tabControl1.Controls.Add(filesPage);
             tabControl1.Controls.Add(statusPage);
             tabControl1.Controls.Add(controlPage);
+            tabControl1.Controls.Add(settingsPage);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Multiline = true;
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(800, 453);
+            tabControl1.Size = new Size(782, 453);
             tabControl1.TabIndex = 0;
             // 
             // filesPage
@@ -69,7 +78,7 @@
             filesPage.Location = new Point(4, 29);
             filesPage.Name = "filesPage";
             filesPage.Padding = new Padding(3);
-            filesPage.Size = new Size(792, 420);
+            filesPage.Size = new Size(774, 420);
             filesPage.TabIndex = 0;
             filesPage.Text = "Files";
             filesPage.UseVisualStyleBackColor = true;
@@ -91,7 +100,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(filesTable);
-            splitContainer1.Size = new Size(786, 414);
+            splitContainer1.Size = new Size(768, 414);
             splitContainer1.SplitterDistance = 49;
             splitContainer1.TabIndex = 0;
             // 
@@ -100,11 +109,11 @@
             AddFile_button.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             AddFile_button.Location = new Point(5, 3);
             AddFile_button.Name = "AddFile_button";
-            AddFile_button.Size = new Size(778, 43);
+            AddFile_button.Size = new Size(760, 43);
             AddFile_button.TabIndex = 0;
             AddFile_button.Text = "Add File";
             AddFile_button.UseVisualStyleBackColor = true;
-            AddFile_button.Click += AddFile_button_Click;
+            AddFile_button.Click += AddFileButton_Click;
             // 
             // filesTable
             // 
@@ -119,7 +128,7 @@
             filesTable.Location = new Point(0, 0);
             filesTable.Name = "filesTable";
             filesTable.RowHeadersWidth = 51;
-            filesTable.Size = new Size(786, 361);
+            filesTable.Size = new Size(768, 361);
             filesTable.TabIndex = 0;
             filesTable.CellContentClick += FilesTable_CellContentClick;
             // 
@@ -162,7 +171,7 @@
             statusPage.Location = new Point(4, 29);
             statusPage.Name = "statusPage";
             statusPage.Padding = new Padding(3);
-            statusPage.Size = new Size(792, 420);
+            statusPage.Size = new Size(774, 420);
             statusPage.TabIndex = 1;
             statusPage.Text = "Status";
             statusPage.UseVisualStyleBackColor = true;
@@ -171,20 +180,75 @@
             // 
             controlPage.Location = new Point(4, 29);
             controlPage.Name = "controlPage";
-            controlPage.Size = new Size(792, 420);
+            controlPage.Size = new Size(774, 420);
             controlPage.TabIndex = 2;
             controlPage.Text = "Control";
             controlPage.UseVisualStyleBackColor = true;
             // 
-            // openFileDialog1
+            // settingsPage
             // 
-            openFileDialog1.FileName = "openFileDialog1";
+            settingsPage.Controls.Add(themeGroupBox);
+            settingsPage.Location = new Point(4, 29);
+            settingsPage.Name = "settingsPage";
+            settingsPage.Size = new Size(774, 420);
+            settingsPage.TabIndex = 3;
+            settingsPage.Text = "Settings";
+            settingsPage.UseVisualStyleBackColor = true;
+            // 
+            // themeGroupBox
+            // 
+            themeGroupBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            themeGroupBox.Controls.Add(addThemeButton);
+            themeGroupBox.Controls.Add(themeSelectorLabel);
+            themeGroupBox.Controls.Add(themeSelector);
+            themeGroupBox.Location = new Point(8, 15);
+            themeGroupBox.Name = "themeGroupBox";
+            themeGroupBox.Size = new Size(758, 90);
+            themeGroupBox.TabIndex = 2;
+            themeGroupBox.TabStop = false;
+            themeGroupBox.Text = "Theme";
+            // 
+            // addThemeButton
+            // 
+            addThemeButton.Location = new Point(6, 46);
+            addThemeButton.Name = "addThemeButton";
+            addThemeButton.Size = new Size(94, 29);
+            addThemeButton.TabIndex = 2;
+            addThemeButton.Text = "Add theme";
+            addThemeButton.UseVisualStyleBackColor = true;
+            addThemeButton.Click += addThemeButton_Click;
+            // 
+            // themeSelectorLabel
+            // 
+            themeSelectorLabel.AutoSize = true;
+            themeSelectorLabel.Location = new Point(6, 23);
+            themeSelectorLabel.Name = "themeSelectorLabel";
+            themeSelectorLabel.Size = new Size(95, 20);
+            themeSelectorLabel.TabIndex = 1;
+            themeSelectorLabel.Text = "Select theme";
+            // 
+            // themeSelector
+            // 
+            themeSelector.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            themeSelector.FormattingEnabled = true;
+            themeSelector.Location = new Point(452, 20);
+            themeSelector.Name = "themeSelector";
+            themeSelector.Size = new Size(300, 28);
+            themeSelector.TabIndex = 0;
+            // 
+            // openFileDialog
+            // 
+            openFileDialog.FileName = "openFileDialog1";
+            // 
+            // openThemeDialog
+            // 
+            openThemeDialog.FileName = "openFileDialog1";
             // 
             // UniversalPitroniyTool
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 453);
+            ClientSize = new Size(782, 453);
             Controls.Add(tabControl1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(700, 200);
@@ -199,6 +263,9 @@
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)filesTable).EndInit();
+            settingsPage.ResumeLayout(false);
+            themeGroupBox.ResumeLayout(false);
+            themeGroupBox.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -209,12 +276,18 @@
         private TabPage statusPage;
         private SplitContainer splitContainer1;
         private Button AddFile_button;
-        private OpenFileDialog openFileDialog1;
+        private OpenFileDialog openFileDialog;
         private DataGridView filesTable;
         private DataGridViewTextBoxColumn batTableFile;
         private DataGridViewTextBoxColumn batTableFilePath;
         private DataGridViewButtonColumn batTableRun;
         private DataGridViewButtonColumn batTableDelete;
         private TabPage controlPage;
+        private TabPage settingsPage;
+        private Label themeSelectorLabel;
+        private ComboBox themeSelector;
+        private GroupBox themeGroupBox;
+        private Button addThemeButton;
+        private OpenFileDialog openThemeDialog;
     }
 }

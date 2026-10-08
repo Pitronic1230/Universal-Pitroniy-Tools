@@ -47,13 +47,17 @@ namespace Universal_Pitroniy_Tools
         #region Themes JSON
         class ThemesJSONContent
         {
-            string ThemeName { get; set; }
-            string PrimaryBackgroundColor { get; set; }
+            // Vars
+            public string Name { get; set; }
+            public string Path { get; set; }
+
+            // Theme settings
+            public string PrimaryBackgroundColor { get; set; }
         }
 
         class ThemesJSON
         {
-            List<ThemesJSONContent> Collection { get; set; } = new();
+            public List<ThemesJSONContent> Collection { get; set; } = new();
         }
         #endregion
 
@@ -61,10 +65,9 @@ namespace Universal_Pitroniy_Tools
 
         #region Creating vars
         // JSON collections
-        FilesJSON
-                filesJSON = new(),
-                themesJSON = new(),
-                settingsJSON = new();
+        FilesJSON filesJSON = new();
+        ThemesJSON themesJSON = new(),
+            settingsJSON = new();
 
         // Path vars
         string
@@ -80,13 +83,31 @@ namespace Universal_Pitroniy_Tools
 
         #region Events
         // Add file button
-        private void AddFile_button_Click(object sender, EventArgs e)
+        private void addThemeButton_Click(object sender, EventArgs e)
         {
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (openThemeDialog.ShowDialog() == DialogResult.OK)
             {
-                string fileName = openFileDialog1.SafeFileName;
-                string filePath = openFileDialog1.FileName;
+                string themeName = openThemeDialog.SafeFileName;
+                string themePath = openThemeDialog.FileName;
+
+                ThemesJSONContent content = new()
+                {
+                    Name = themeName,
+                    Path = themePath                    
+                };
+                themesJSON.Collection.Add(content);
+                /* TODO:
+                 * Доделать добавление темы через кнопку и сохранение выбранной темы
+                 * в JSON файл
+                 */
+            }
+        }
+        private void AddFileButton_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = openFileDialog.SafeFileName;
+                string filePath = openFileDialog.FileName;
 
                 // Add table row
                 filesTable.Rows.Add(
@@ -142,12 +163,15 @@ namespace Universal_Pitroniy_Tools
         #region OnLoad and OnClosing Form1 funcs
         private void OnLoad(object sender, EventArgs e)
         {
-            string content = File.ReadAllText(filesJSONpath);
+            // JSONs
+            string filesContent = File.ReadAllText(filesJSONpath);
+            string themesContent = File.ReadAllText(themesJSONpath);
+            //string settingsContent = File.ReadAllText(settingsJSONpath);
 
             // Check if content is empty
-            if (content.Length > 0)
+            if (filesContent.Length > 0)
             {
-                filesJSON = JsonSerializer.Deserialize<FilesJSON>(content) ?? new FilesJSON();
+                filesJSON = JsonSerializer.Deserialize<FilesJSON>(filesContent) ?? new FilesJSON();
 
                 foreach (var item in filesJSON.Collection)
                 {
@@ -157,8 +181,14 @@ namespace Universal_Pitroniy_Tools
                         "Run",
                         "Delete"
                         );
-                }
+                } // Creating files table from filesJSON
             }
+            if (themesContent.Length > 0)
+            {
+                themesJSON = JsonSerializer.Deserialize<ThemesJSON>(themesContent) ?? new ThemesJSON();
+            }
+
+
         }
 
         private void OnClosing(object sender, FormClosingEventArgs e)
@@ -167,5 +197,6 @@ namespace Universal_Pitroniy_Tools
             File.WriteAllText(filesJSONpath, content);
         }
         #endregion
+
     }
 }
