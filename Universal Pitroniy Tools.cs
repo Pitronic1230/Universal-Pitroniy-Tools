@@ -9,11 +9,11 @@ namespace Universal_Pitroniy_Tools
         class PiTools
         {
             // Local Application Data folder path
-            private static string savingDirrectoryPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), // local application data folder path
+            private static readonly string savingDirrectoryPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "Universal Pitroniy Tools");
 
-            public static string CreateFile(string path)
+            internal static string CreateFile(string path)
             {
                 string returnedPath = Path.Combine(
                     savingDirrectoryPath,
@@ -40,7 +40,7 @@ namespace Universal_Pitroniy_Tools
 
         class FilesJSON
         {
-            public List<FilesJSONContent> Collection { get; set; } = new();
+            public List<FilesJSONContent> Collection { get; set; } = [];
         }
         #endregion
 
@@ -57,7 +57,7 @@ namespace Universal_Pitroniy_Tools
 
         public class ThemesJSON
         {
-            public List<ThemesJSONContent> Collection { get; set; } = new();
+            public List<ThemesJSONContent> Collection { get; set; } = [];
         }
         #endregion
 
@@ -82,26 +82,13 @@ namespace Universal_Pitroniy_Tools
 
         #endregion
 
-        #region Creating vars
-        // JSON collections
-        FilesJSON filesJSON = new();
-        public ThemesJSON themesJSON = new();
-        SettingsJSON settingsJSON = new();
-
-        // Path vars
-        string
-            filesJSONpath = PiTools.CreateFile("files.json"),
-            themesJSONpath = PiTools.CreateFile("themes.json"),
-            settingsJSONpath = PiTools.CreateFile("settings.json");
-        #endregion
-
         public UniversalPitroniyTool()
         {
             InitializeComponent();
         }
 
         #region Events
-        private void addThemeButton_Click(object sender, EventArgs e)
+        private void AddThemeButton_Click(object sender, EventArgs e)
         {
             if (openThemeDialog.ShowDialog() == DialogResult.OK)
             {
@@ -116,16 +103,12 @@ namespace Universal_Pitroniy_Tools
 
                 themesJSON.Collection.Add(content);
                 themeSelector.Items.Add(content.Name);
-                /* TODO:
-                 * Доделать добавление темы через кнопку и сохранение выбранной темы
-                 * в JSON файл
-                 */
             }
         }
 
         private void DeleteThemeButton_Click(object sender, EventArgs e)
         {
-            DeleteThemeForm deleteThemeForm = new();
+            DeleteThemeForm deleteThemeForm = new(this, themesJSON);
 
             deleteThemeForm.ShowDialog();
         }
@@ -181,6 +164,8 @@ namespace Universal_Pitroniy_Tools
         }
         #endregion
 
+
+
         #region OnLoad and OnClosing Form1 funcs
         private void OnLoad(object sender, EventArgs e)
         {
@@ -210,12 +195,9 @@ namespace Universal_Pitroniy_Tools
                 themesJSON = JsonSerializer.Deserialize<ThemesJSON>(themesContent) 
                     ?? new ThemesJSON();
 
-                int number = 1;
-
                 foreach (var item in themesJSON.Collection)
                 {
-                    themeSelector.Items.Add($"{number}: {item.Name}");
-                    number++;
+                    themeSelector.Items.Add(item.Name);
                 }
             }
 
@@ -239,5 +221,21 @@ namespace Universal_Pitroniy_Tools
         }
         #endregion
 
+
+
+
+
+        #region Vars
+        // JSON collections
+        FilesJSON filesJSON = new();
+        public ThemesJSON themesJSON = new();
+        SettingsJSON settingsJSON = new();
+
+        // Paths
+        string
+            filesJSONpath = PiTools.CreateFile("files.json"),
+            themesJSONpath = PiTools.CreateFile("themes.json"),
+            settingsJSONpath = PiTools.CreateFile("settings.json");
+        #endregion
     }
 }

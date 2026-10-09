@@ -219,7 +219,7 @@
             deleteThemeButton.TabIndex = 3;
             deleteThemeButton.Text = "Delete theme";
             deleteThemeButton.UseVisualStyleBackColor = true;
-            deleteThemeButton.Click += this.DeleteThemeButton_Click;
+            deleteThemeButton.Click += DeleteThemeButton_Click;
             // 
             // addThemeButton
             // 
@@ -230,7 +230,7 @@
             addThemeButton.TabIndex = 2;
             addThemeButton.Text = "Add theme";
             addThemeButton.UseVisualStyleBackColor = true;
-            addThemeButton.Click += addThemeButton_Click;
+            addThemeButton.Click += AddThemeButton_Click;
             // 
             // themeSelectorLabel
             // 
@@ -299,10 +299,10 @@
         private TabPage controlPage;
         private TabPage settingsPage;
         private Label themeSelectorLabel;
-        private ComboBox themeSelector;
         private GroupBox themeGroupBox;
         private Button addThemeButton;
         private OpenFileDialog openThemeDialog;
         private Button deleteThemeButton;
+        internal ComboBox themeSelector;
     }
 }

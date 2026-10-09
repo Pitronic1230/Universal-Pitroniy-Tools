@@ -28,23 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            deleteThemeList = new ListBox();
+            themesList = new ListBox();
+            deleteButton = new Button();
             SuspendLayout();
             // 
-            // deleteThemeList
+            // themesList
             // 
-            deleteThemeList.FormattingEnabled = true;
-            deleteThemeList.Location = new Point(12, 12);
-            deleteThemeList.Name = "deleteThemeList";
-            deleteThemeList.Size = new Size(458, 224);
-            deleteThemeList.TabIndex = 0;
+            themesList.FormattingEnabled = true;
+            themesList.Location = new Point(12, 12);
+            themesList.Name = "themesList";
+            themesList.Size = new Size(458, 184);
+            themesList.TabIndex = 0;
+            // 
+            // deleteButton
+            // 
+            deleteButton.Location = new Point(376, 212);
+            deleteButton.Name = "deleteButton";
+            deleteButton.Size = new Size(94, 29);
+            deleteButton.TabIndex = 1;
+            deleteButton.Text = "Delete";
+            deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Click += DeleteButton_Click;
             // 
             // DeleteThemeForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(482, 253);
-            Controls.Add(deleteThemeList);
+            Controls.Add(deleteButton);
+            Controls.Add(themesList);
             Name = "DeleteThemeForm";
             Text = "DeleteThemeForm";
             Load += DeleteThemeForm_Load;
@@ -53,6 +65,7 @@
 
         #endregion
 
-        private ListBox deleteThemeList;
+        private ListBox themesList;
+        private Button deleteButton;
     }
 }
