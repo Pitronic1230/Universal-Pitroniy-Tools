@@ -45,17 +45,17 @@ namespace Universal_Pitroniy_Tools
         #endregion
 
         #region Themes JSON
-        class ThemesJSONContent
+        public class ThemesJSONContent
         {
             // Themes file
-            public string Name { get; set; }
-            public string Path { get; set; }
+            public string Name { get; set; } = "";
+            public string Path { get; set; } = "";
 
             // Theme
             public string PrimaryBackgroundColor { get; set; }
         }
 
-        class ThemesJSON
+        public class ThemesJSON
         {
             public List<ThemesJSONContent> Collection { get; set; } = new();
         }
@@ -65,18 +65,18 @@ namespace Universal_Pitroniy_Tools
         class SettingsJSON
         {
             // Settings file
-            public string Name { get; set; }
-            public string Path { get; set; }
+            public string Name { get; set; } = "";
+            public string Path { get; set; } = "";
 
             // Settings
-            public string selectedTheme { get; set; }
+            public string SelectedTheme { get; set; } = "";
 
-            public string Language { get; set; }
+            public string Language { get; set; } = "";
         }
         
         class SettingsJSONCollection
         {
-            public List<SettingsJSON> Collection { get; set; } = new();
+            public List<SettingsJSON> Collection { get; set; } = [];
         }
         #endregion
 
@@ -85,8 +85,8 @@ namespace Universal_Pitroniy_Tools
         #region Creating vars
         // JSON collections
         FilesJSON filesJSON = new();
-        ThemesJSON themesJSON = new();
-        SettingsJSONCollection settingsJSON = new();
+        public ThemesJSON themesJSON = new();
+        SettingsJSON settingsJSON = new();
 
         // Path vars
         string
@@ -101,7 +101,6 @@ namespace Universal_Pitroniy_Tools
         }
 
         #region Events
-        // Add file button
         private void addThemeButton_Click(object sender, EventArgs e)
         {
             if (openThemeDialog.ShowDialog() == DialogResult.OK)
@@ -112,15 +111,25 @@ namespace Universal_Pitroniy_Tools
                 ThemesJSONContent content = new()
                 {
                     Name = themeName,
-                    Path = themePath                    
+                    Path = themePath
                 };
+
                 themesJSON.Collection.Add(content);
+                themeSelector.Items.Add(content.Name);
                 /* TODO:
                  * Доделать добавление темы через кнопку и сохранение выбранной темы
                  * в JSON файл
                  */
             }
         }
+
+        private void DeleteThemeButton_Click(object sender, EventArgs e)
+        {
+            DeleteThemeForm deleteThemeForm = new();
+
+            deleteThemeForm.ShowDialog();
+        }
+
         private void AddFileButton_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -128,15 +137,8 @@ namespace Universal_Pitroniy_Tools
                 string fileName = openFileDialog.SafeFileName;
                 string filePath = openFileDialog.FileName;
 
-                // Add table row
-                filesTable.Rows.Add(
-                    fileName,
-                    filePath,
-                    "Run",
-                    "Delete"
-                    );
+                filesTable.Rows.Add(fileName,filePath,"Run","Delete");
 
-                // Add content to files collection
                 filesJSON.Collection.Add(
                     new FilesJSONContent
                     {
@@ -182,15 +184,15 @@ namespace Universal_Pitroniy_Tools
         #region OnLoad and OnClosing Form1 funcs
         private void OnLoad(object sender, EventArgs e)
         {
-            // JSONs
+            // Load JSONs
             string filesContent = File.ReadAllText(filesJSONpath);
             string themesContent = File.ReadAllText(themesJSONpath);
-            //string settingsContent = File.ReadAllText(settingsJSONpath);
+            string settingsContent = File.ReadAllText(settingsJSONpath);
 
-            // Check if content is empty
             if (filesContent.Length > 0)
             {
-                filesJSON = JsonSerializer.Deserialize<FilesJSON>(filesContent) ?? new FilesJSON();
+                filesJSON = JsonSerializer.Deserialize<FilesJSON>(filesContent) 
+                    ?? new FilesJSON();
 
                 foreach (var item in filesJSON.Collection)
                 {
@@ -202,18 +204,38 @@ namespace Universal_Pitroniy_Tools
                         );
                 } // Creating files table from filesJSON
             }
+
             if (themesContent.Length > 0)
             {
-                themesJSON = JsonSerializer.Deserialize<ThemesJSON>(themesContent) ?? new ThemesJSON();
+                themesJSON = JsonSerializer.Deserialize<ThemesJSON>(themesContent) 
+                    ?? new ThemesJSON();
+
+                int number = 1;
+
+                foreach (var item in themesJSON.Collection)
+                {
+                    themeSelector.Items.Add($"{number}: {item.Name}");
+                    number++;
+                }
             }
 
-
+            if (settingsContent.Length > 0)
+            {
+                settingsJSON = JsonSerializer.Deserialize<SettingsJSON>(settingsContent) 
+                    ?? new SettingsJSON();
+            }
         }
 
         private void OnClosing(object sender, FormClosingEventArgs e)
         {
-            string content = JsonSerializer.Serialize(filesJSON);
-            File.WriteAllText(filesJSONpath, content);
+            // Save JSONs
+            string filesContent = JsonSerializer.Serialize(filesJSON);
+            string themesContent = JsonSerializer.Serialize(themesJSON);
+            string settingsContent = JsonSerializer.Serialize(settingsJSON);
+
+            File.WriteAllText(filesJSONpath, filesContent);
+            File.WriteAllText(themesJSONpath, themesContent);
+            File.WriteAllText(settingsJSONpath, settingsContent);
         }
         #endregion
 

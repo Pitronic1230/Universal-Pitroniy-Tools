@@ -42,6 +42,7 @@
             controlPage = new TabPage();
             settingsPage = new TabPage();
             themeGroupBox = new GroupBox();
+            deleteThemeButton = new Button();
             addThemeButton = new Button();
             themeSelectorLabel = new Label();
             themeSelector = new ComboBox();
@@ -198,21 +199,34 @@
             // themeGroupBox
             // 
             themeGroupBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            themeGroupBox.Controls.Add(deleteThemeButton);
             themeGroupBox.Controls.Add(addThemeButton);
             themeGroupBox.Controls.Add(themeSelectorLabel);
             themeGroupBox.Controls.Add(themeSelector);
             themeGroupBox.Location = new Point(8, 15);
             themeGroupBox.Name = "themeGroupBox";
-            themeGroupBox.Size = new Size(758, 90);
+            themeGroupBox.Size = new Size(758, 125);
             themeGroupBox.TabIndex = 2;
             themeGroupBox.TabStop = false;
             themeGroupBox.Text = "Theme";
             // 
+            // deleteThemeButton
+            // 
+            deleteThemeButton.AutoSize = true;
+            deleteThemeButton.Location = new Point(6, 82);
+            deleteThemeButton.Name = "deleteThemeButton";
+            deleteThemeButton.Size = new Size(109, 30);
+            deleteThemeButton.TabIndex = 3;
+            deleteThemeButton.Text = "Delete theme";
+            deleteThemeButton.UseVisualStyleBackColor = true;
+            deleteThemeButton.Click += this.DeleteThemeButton_Click;
+            // 
             // addThemeButton
             // 
+            addThemeButton.AutoSize = true;
             addThemeButton.Location = new Point(6, 46);
             addThemeButton.Name = "addThemeButton";
-            addThemeButton.Size = new Size(94, 29);
+            addThemeButton.Size = new Size(94, 30);
             addThemeButton.TabIndex = 2;
             addThemeButton.Text = "Add theme";
             addThemeButton.UseVisualStyleBackColor = true;
@@ -289,5 +303,6 @@
         private GroupBox themeGroupBox;
         private Button addThemeButton;
         private OpenFileDialog openThemeDialog;
+        private Button deleteThemeButton;
     }
 }
